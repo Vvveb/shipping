@@ -53,6 +53,11 @@ class Shipping extends ShippingMethod {
 		$subtotal = $this->cart->getSubTotal(); //without totals/taxes
 		$total    = $this->cart->getGrandTotal();
 
+		if (($this->method_data['cost'] == 0) ||
+			($this->method_data['free_shipping'] && ($total > $this->method_data['free_shipping']))) {
+			$this->method_data['cost']  = 0;
+		}
+			
 		if (isset($this->method_data['weight'])) {
 			$cartWeight       = $this->cart->getWeight();
 			$base             = $this->method_data['base-weight'];
@@ -65,7 +70,7 @@ class Shipping extends ShippingMethod {
 
 				foreach ($weights as $weight) {
 					if (($cartWeight) > $weight['above_weight']) {
-						$additionalPrice = $weight['price'];
+						$additionalPrice = floatval($weight['price']);
 
 						break;
 					}
@@ -78,9 +83,7 @@ class Shipping extends ShippingMethod {
 			}
 		}
 
-		if (($this->method_data['cost'] == 0) ||
-			($this->method_data['free_shipping'] && ($total > $this->method_data['free_shipping']))) {
-			$this->method_data['cost']  = 0;
+		if ($this->method_data['cost'] == 0) {
 			$this->method_data['text']  = __('Free shipping');
 		}
 
@@ -89,6 +92,7 @@ class Shipping extends ShippingMethod {
 
 	public function getMethod($checkoutInfo = [], $options = []) {
 		$this->method_data = $options + $this->method_data;
+		$this->method_data['cost'] = floatval($this->method_data['cost']);
 
 		//if set only for specific region(s) check if address matches region
 		$region_group_id     = $this->method_data['region_group_id'];
