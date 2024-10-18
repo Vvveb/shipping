@@ -137,4 +137,8 @@ class Shipping extends ShippingMethod {
 			$this->cart->addTotal($this->namespace, $this->method_data['title'] , $this->method_data['cost'], $this->method_data['text']);
 		}
 	}
+
+	public function ship() {
+		return true;
+	}
 }

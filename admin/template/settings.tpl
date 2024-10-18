@@ -2,7 +2,7 @@ import(common.tpl)
 
 
 /* method tabs */
-.flat-rate-shipping|before = <?php $index = 0;?>
+.settings|before = <?php $index = 0;?>
 @method = [data-v-methods] [data-v-method]
 @method|deleteAllButFirstChild
 
@@ -16,10 +16,13 @@ foreach ($this->methods as $index => $method) { ?>
 	@method [data-v-method-shipping_method_id]|href = <?php echo "#tab-$index";?>
 	@method [data-v-method-shipping_method_id]|addClass = <?php if ($index == 0) echo "active";?>
 	@method [data-v-method-name] = <?php $langa = current($method['lang'] ?? []);echo $langa['title'] ?: "Method  $index";?>
+
+/*
 	@method input.method|value = <?php
 		$_setting = '@@__name:\]\[([^\]]+)\]__@@';
 		echo $_POST['settings'][$_setting] ?? $method[$_setting] ?? '@@__value__@@';
 	?>
+*/
 
 	@method input.method|name = <?php
 		$name = '@@__name__@@';
