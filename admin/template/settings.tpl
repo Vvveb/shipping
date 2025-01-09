@@ -15,23 +15,23 @@ foreach ($this->methods as $index => $method) { ?>
 
 	@method [data-v-method-shipping_method_id]|href = <?php echo "#tab-$index";?>
 	@method [data-v-method-shipping_method_id]|addClass = <?php if ($index == 0) echo "active";?>
-	@method [data-v-method-name] = <?php $langa = current($method['lang'] ?? []);echo $langa['title'] ?: "Method  $index";?>
+	@method [data-v-method-name] = <?php $langa = current($method['lang'] ?? []);echo htmlspecialchars($langa['title'] ?: "Method  $index");?>
 
 /*
 	@method input.method|value = <?php
 		$_setting = '@@__name:\]\[([^\]]+)\]__@@';
-		echo $_POST['settings'][$_setting] ?? $method[$_setting] ?? '@@__value__@@';
+		echo htmlspecialchars($_POST['settings'][$_setting] ?? $method[$_setting] ?? '@@__value__@@');
 	?>
 */
 
 	@method input.method|name = <?php
 		$name = '@@__name__@@';
-		echo str_replace('methods[0]',"methods[$index]", $name);
+		echo htmlspecialchars(str_replace('methods[0]',"methods[$index]", $name));
 	?>	
 	
 	@method select|name = <?php
 		$name = '@@__name__@@';
-		echo str_replace('methods[0]',"methods[$index]", $name);
+		echo htmlspecialchars(str_replace('methods[0]',"methods[$index]", $name));
 	?>
 
 @method|after = <?php 
@@ -80,7 +80,7 @@ foreach ($this->languagesList as $language) { ?>
 	@language [data-v-lang-*] = <?php 
 		$name = '@@__data-v-lang-(*)__@@';
 		//var_dump($method['lang'][0][$language['language_id']]);
-		echo $method['lang'][$language['language_id']][$name] ?? $_POST[$index][$language['language_id']][$name] ?? ''
+		echo htmlspecialchars($method['lang'][$language['language_id']][$name] ?? $_POST[$index][$language['language_id']][$name] ?? '')
 	?>
 
 	@language [data-v-lang-*]|name = <?php 

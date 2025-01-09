@@ -81,7 +81,7 @@ class Shipping {
 			$route = $request->get['route'] ?? '';
 			$module = $request->get['module'] ?? '';
 
-			if ($route == 'checkout/checkout/index' || $module == 'checkout/checkout') {
+			if ($route == '/checkout' || $module == 'checkout/checkout/index') {
 				$this->init();
 			}
 
