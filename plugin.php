@@ -61,7 +61,7 @@ class Shipping {
 				$method += $lang;
 			}
 
-			$name = slugify($lang['title']) ?? $this->namespace;
+			$name = slugify($lang['title'] ?? $this->namespace);
 			$shipping->registerMethod($name, ShippingMethod::class, $method);
 		}
 	}

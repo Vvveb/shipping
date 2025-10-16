@@ -8,7 +8,7 @@
 
   <meta name="description" content="">
   <meta name="author" content="">
-  <link rel="icon" href="../../favicon.ico">
+  <link rel="icon" href="/favicon.ico">
   
 
   <base href="">
@@ -35,6 +35,8 @@
 
       <form id="shipping-form" action="" method="post" class="settings" data-v-product>
         <input type="hidden" name="action" id="action" value="save">
+        <input type="hidden" name="csrf" data-v-csrf>
+		
         <div class="actions">
           <div class="title">
             <h4 class="text-muted mt-2">
@@ -203,7 +205,7 @@
 								</span>								
 							</label>
 							<div class="col-sm-10">
-							  <input type="text" name="methods[0][free_shipping]" value="0.00" placeholder="Total for free shipping" id="input-free-shipping" class="form-control method">
+							  <input type="text" name="methods[0][free_shipping]" value="0.00" step="0.01" min="0"  placeholder="Total for free shipping" id="input-free-shipping" class="form-control method">
 							</div>
 						  </div>
 						  
@@ -408,7 +410,7 @@
 								</span>								
 							</label>
 							<div class="col-sm-10">
-							  <input type="text" name="methods[0][free_shipping]" value="0.00" placeholder="Total for free shipping" id="input-free-shipping" class="form-control method" disabled>
+							  <input type="text" name="methods[0][free_shipping]" value="0.00" step="0.01" min="0"  placeholder="Total for free shipping" id="input-free-shipping" class="form-control method" disabled>
 							</div>
 						  </div>
 
@@ -508,9 +510,9 @@
 
   <script src="js/popper.min.js"></script>
   <script src="js/bootstrap.min.js"></script>
-  <script id="admin-js" type="module" src="../../js/admin.js"></script>
-  <script type="module" src="../../js/admin.js"></script>
-  <script id="functions-js" src="../../js/admin/functions.js"></script>
+  <script id="admin-js" type="module" src="/js/admin.js"></script>
+  <script type="module" src="/js/admin.js"></script>
+  <script id="functions-js" src="/js/admin/functions.js"></script>
 
 </body>
 
