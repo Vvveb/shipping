@@ -90,7 +90,7 @@ class Shipping extends ShippingMethod {
 		$this->method_data['difference'] = max($this->method_data['free_shipping'] - $total - $this->method_data['cost'], 0);
 	}
 
-	public function getMethod($checkoutInfo = [], $options = []) {
+	public function getMethod(&$checkoutInfo = [], $options = []) {
 		$this->method_data         = $options + $this->method_data;
 		$this->method_data['cost'] = floatval($this->method_data['cost']);
 
