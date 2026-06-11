@@ -134,7 +134,7 @@ class Shipping extends ShippingMethod {
 				$this->cart->addTax($this->namespace, $this->method_data['cost'], $this->method_data['tax_type_id']);
 			}
 
-			$this->cart->addTotal($this->namespace, $this->method_data['title'] , $this->method_data['cost'], $this->method_data['text']);
+			$this->cart->addTotal('shipping', $this->namespace, $this->method_data['title'] , $this->method_data['cost'], $this->method_data['text']);
 		}
 	}
 

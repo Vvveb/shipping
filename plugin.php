@@ -33,12 +33,12 @@ Author url: https://www.vvveb.com
 Settings: /admin/index.php?module=plugins/shipping/settings
 */
 
-use function Vvveb\getLanguageId;
 use function Vvveb\getSetting;
 use Vvveb\Plugins\Shipping\Shipping as ShippingMethod;
 use function Vvveb\slugify;
 use Vvveb\System\Core\Request;
 use Vvveb\System\Event;
+use Vvveb\System\Locale;
 use Vvveb\System\Shipping as ShippingApi;
 
 if (! defined('V_VERSION')) {
@@ -54,7 +54,7 @@ class Shipping {
 		$shipping = ShippingApi::getInstance();
 
 		foreach ($settings as $method) {
-			$lang = $method['lang'][getLanguageId()] ?? [];
+			$lang = $method['lang'][Locale :: getLanguageId()] ?? [];
 
 			if ($lang) {
 				unset($method['lang']);
