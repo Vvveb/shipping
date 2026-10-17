@@ -1,0 +1,81 @@
+<div class="rule row g-2 mb-3">
+	<div class="col-sm-4">
+			
+		<select class="form-select" name="methods[0][weight][#weight#][condition]" value="" placeholder="Weight" data-v-weight-above_weight>
+		<!--
+			<optgroup label="General">
+				<option value="none">Always</option>
+			</optgroup>
+			<optgroup label="Cart">
+				<option value="subtotal">Sub total (total products price)</option>
+				<option value="total">Grand total price (Final price)</option> 
+				-->
+				<option value="weight">Total cart weight</option>
+				<!--
+				<option value="max_width">Max width</option>
+				<option value="max_height">Max height</option>
+				<option value="max_length">Max length</option>
+			</optgroup>
+			<optgroup label="Checkout">
+				<option value="country_id">Country</option>
+				<option value="region_id">Region</option>
+				<option value="post_code">Max height</option>
+				<option value="coupon">Coupon</option>
+			</optgroup>
+			<optgroup label="Product">
+				<option value="product">Price</option>
+				<option value="price">Price</option>
+				<option value="weight">Weight</option>
+				<option value="height">Height</option>
+				<option value="kength">Length</option>
+				<option value="volume">Volume</option>
+				<option value="max_dimension">Max dimension</option>
+				<option value="product_tag">Product tag</option>
+				<option value="product_category">Product category</option>
+				<option value="product_field_value">Field value</option>
+				<option value="product_field_range">Field range</option>
+				<option value="shipping_class">Shipping class</option>
+				<option value="stock_quantity">Stock quantity</option>
+				<option value="stock_status">Stock status</option>
+			</optgroup>
+			<optgroup label="User">
+				<option value="user_group_id">User Group</option>
+			</optgroup>
+			<optgroup label="Time">
+				<option value="time_of_the_day">Time of the day</option>
+				<option value="day_of_the_week">Day of the week</option>
+			</optgroup>
+			<optgroup label="Shipping">
+				<option value="shipping_cost">Shipping cost</option>
+			</optgroup>-->
+		</select>		
+		
+	</div>
+	<div class="col-sm-4">
+		<select class="form-select" name="field_group[conditionals][operator]" data-ui="0" data-ajax="0" data-multiple="0" data-placeholder="Select" data-allow_null="0">
+		<!--
+		  <option value="==" selected="selected" data-i="0">is equal to</option> -->
+		  <option value=">">is greater than</option>
+		  <option value=">=">is greater or equal to</option>
+		</select>
+	</div>
+	<div class="col-sm-4">
+		<div class="d-flex">
+			<select class="form-select" name="field_group[conditionals][value]" data-ui="0" data-ajax="0" data-multiple="0" data-placeholder="Select" data-allow_null="0">
+			   <option value="post" selected="selected" data-i="0">Post</option>
+			   <option value="page">Page</option>
+			   <option value="product">Product</option>
+			   <option value="shop_order">Order</option>
+			   <option value="shop_coupon">Coupon</option>
+			 </select>
+		  <button class="btn btn-outline-primary btn-icon text-nowrap mx-2 btn-add">
+			<span>and</span> <svg class="svg-icon" aria-hidden="true"><use href="/admin/default/img/icons.svg#plus"></use></svg>
+		  </button>
+		  <button class="btn btn-outline-danger btn-icon btn-remove">
+			<svg class="svg-icon" aria-hidden="true"><use href="/admin/default/img/icons.svg#circle-minus"></use></svg>
+		  </button>
+		</div>
+	</div>
+ </div>	
+
+

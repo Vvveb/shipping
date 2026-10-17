@@ -7,38 +7,38 @@ import(common.tpl)
 @method|deleteAllButFirstChild
 
 @method|before = <?php
-if (isset($this->methods) && is_array($this->methods))
-foreach ($this->methods as $index => $method) { ?>
+if (isset($this->methods) && is_array($this->methods)) {
+$index = 0;	
+foreach ($this->methods as $method) { ?>
 
+	@method|data-tab = <?php echo $index;?>
+	
 	[data-v-methods] .tab-pane[data-v-method]|id = <?php echo "tab-$index";?>
+	[data-v-methods] .tab-pane[data-v-method]|data-tab = $index
 	[data-v-methods] .tab-pane[data-v-method]|addClass = <?php if ($index == 0) echo "active";?>
 
 	@method [data-v-method-shipping_method_id]|href = <?php echo "#tab-$index";?>
 	@method [data-v-method-shipping_method_id]|addClass = <?php if ($index == 0) echo "active";?>
-	@method [data-v-method-name] = <?php $langa = current($method['lang'] ?? []);echo htmlspecialchars($langa['title'] ?: "Method  $index");?>
-
-/*
-	@method input.method|value = <?php
-		$_setting = '@@__name:\]\[([^\]]+)\]__@@';
-		echo htmlspecialchars($_POST['settings'][$_setting] ?? $method[$_setting] ?? '@@__value__@@');
-	?>
-*/
+	@method [data-v-method-name] = <?php 
+		$langa = current($method['lang'] ?? []);
+		echo htmlspecialchars(is_array($langa) ? ($langa['title'] ?? "Method $index") : ($method['title'] ?? "Method $index"));?>
 
 	@method input.method|name = <?php
 		$name = '@@__name__@@';
-		echo htmlspecialchars(str_replace('methods[0]',"methods[$index]", $name));
+		echo htmlspecialchars(str_replace('methods[#tab#]',"methods[$index]", $name));
 	?>	
 	
 	@method select|name = <?php
 		$name = '@@__name__@@';
-		echo htmlspecialchars(str_replace('methods[0]',"methods[$index]", $name));
+		echo htmlspecialchars(str_replace('methods[#tab#]',"methods[$index]", $name));
 	?>
+	
+	@method input[data-v-method-*] = $method['@@__data-v-method-(*)__@@']
 
 @method|after = <?php 
+		$index++;
 	}
-
-$index = 0;	
-$method = [];
+}
 ?>
 
 @shipping_status = [data-v-shipping_status_id] [data-v-option]
@@ -63,7 +63,6 @@ if(isset($this->shipping_status) && is_array($this->shipping_status)) {
 [data-v-languages]|before = <?php $_lang_instance = '@@__data-v-languages__@@';$_i = 0;?>
 @language = [data-v-languages] [data-v-language]
 @language|deleteAllButFirstChild
-//@language|addClass = <?php if ($_i == 0) echo 'active';?>
 
 @language|before = <?php
 
@@ -76,37 +75,97 @@ foreach ($this->languagesList as $language) { ?>
 	@language [data-v-language-img]|src = <?php echo 'language/' . $language['code'] . '/' . $language['code'] . '.png';?>
 	@language [data-v-language-link]|href = <?php echo "#lang-$index-" . $language['code'] . '-' . $_lang_instance?>
 	@language [data-v-language-link]|addClass = <?php if ($_i == 0) echo 'active';?>
-
-	@language [data-v-lang-*] = <?php 
+	
+	[data-v-method] @language [data-v-lang-*] = <?php 
 		$name = '@@__data-v-lang-(*)__@@';
-		//var_dump($method['lang'][0][$language['language_id']]);
-		echo htmlspecialchars($method['lang'][$language['language_id']][$name] ?? $_POST[$index][$language['language_id']][$name] ?? '')
+		echo htmlspecialchars($method['lang'][$language['language_id']][$name] ?? $_POST[$index][$language['language_id']][$name] ?? '');
 	?>
 
-	@language [data-v-lang-*]|name = <?php 
+	[data-v-method] @language [data-v-lang-*]|name = <?php 
 		$name = '@@__data-v-lang-(*)__@@';
 		echo "methods[$index][lang][{$language['language_id']}][$name]";
 	?>	
 
+	.tab-content-template @language [data-v-lang-*]|name = <?php 
+		$name = '@@__data-v-lang-(*)__@@';
+		echo "methods[#tab#][lang][{$language['language_id']}][$name]";
+	?>	
+	
 @language|after = <?php 
 $_i++;
 }
 ?>
 
 
-@weight = [data-v-weights] [data-v-weight]
+@group = [data-v-method] [data-v-group]
+@rule|deleteAllButFirstChild
+
+@group|before = <?php
+$count = 0;
+$rules = [];
+if(isset($weight['conditions']) && is_array($weight['conditions'])) {
+	$group_index = 0;	
+	foreach ($weight['conditions'] as $rules) {
+	?>
+	
+	@group|data-v-group =$group_index
+	@group|data-group   =$group_index
+	
+	@group|after = <?php 
+		$count++;
+		$group_index++;
+	} 
+}?>
+
+@rule = [data-v-method] [data-v-group] [data-v-rule]
+@rule|deleteAllButFirstChild
+
+@rule|before = <?php
+$count = 0;
+if(isset($rules) && is_array($rules)) {
+	$rule_index = 0;
+	foreach ($rules as $rule) {
+		$rule_condition = htmlspecialchars($rule['condition'] ?? '');
+		$rule_operator  = htmlspecialchars($rule['operator'] ?? '');
+		?>
+	
+	@rule|data-rule                  = $rule_index
+	@rule input[data-v-rule-*]       = $rule['@@__data-v-rule-(*)__@@']
+	@rule input[data-v-rule-*]|name  = <?php echo "methods[$index][weight][$weight_index][conditions][$group_index][$rule_index][@@__data-v-rule-(*)__@@]";?>
+	@rule select[data-v-rule-*]|name = <?php echo "methods[$index][weight][$weight_index][conditions][$group_index][$rule_index][@@__data-v-rule-(*)__@@]";?>
+	
+	/*restore saved condition/operator selection, js syncs the selects from these*/
+	@rule select[data-v-rule-condition]|addNewAttribute = <?php echo ' data-saved-value="' . $rule_condition . '"';?>
+	@rule select[data-v-rule-operator]|addNewAttribute = <?php echo ' data-saved-value="' . $rule_operator . '"';?>
+	
+	/*label for autocomplete value widget*/
+	@rule input[data-v-rule-value]|addNewAttribute = <?php echo ' data-text="' . htmlspecialchars($rule['value_text'] ?? '') . '"';?>
+	
+	@rule|after = <?php 
+			$count++;
+			$rule_index++;
+	} 
+}?>
+
+@weight =  [data-v-method] [data-v-weights] [data-v-weight]
 @weight|deleteAllButFirstChild
 
 @weight|before = <?php
 $count = 0;
 if(isset($method['weight']) && is_array($method['weight'])) {
-	foreach ($method['weight'] as $weight_index => $weight) {?>
+	$weight_index = 0;
+	foreach ($method['weight'] as $weight) {?>
+
+	//@weight [type="radio"][data-v-weight-*]|addNewAttribute= <?php if ($weight['@@__data-v-weight-(*)__@@'] == '@@__value__@@') echo 'checked';?>
 	
-	@weight [data-v-weight-*]           = $weight['@@__data-v-weight-(*)__@@']
-	@weight input[data-v-weight-*]|name = <?php echo "methods[$index][weight][$weight_index][@@__data-v-weight-(*)__@@]";?>
+	@weight|data-weight                  = $weight_index
+	@weight input[data-v-weight-*]       = $weight['@@__data-v-weight-(*)__@@']
+	@weight input[data-v-weight-*]|name  = <?php echo "methods[$index][weight][$weight_index][@@__data-v-weight-(*)__@@]";?>
+	@weight select[data-v-weight-*]|name = <?php echo "methods[$index][weight][$weight_index][@@__data-v-weight-(*)__@@]";?>
 	
 	@weight|after = <?php 
 		$count++;
+		$weight_index++;
 	} 
 }?>
 
@@ -168,3 +227,11 @@ if(isset($this->order_status) && is_array($this->order_status)) {
 		$count++;
 	} 
 }?>
+
+/* gross/net fee radio: rewrite cloned names and restore checked state */
+@method input[data-v-tax-included]|name = <?php
+	$name = '@@__name__@@';
+	echo htmlspecialchars(str_replace('methods[#tab#]',"methods[$index]", $name));
+?>
+
+@method input[data-v-tax-included]|addNewAttribute = <?php echo ((string)($method['tax_included'] ?? '0') === '@@__value__@@') ? 'checked' : '';?>

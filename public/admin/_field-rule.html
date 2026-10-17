@@ -1,0 +1,81 @@
+<div class="rule row g-2 mb-3" draggable="true" data-v-rule data-rule="#rule#">
+	<div class="col-sm-4">
+		<select class="form-select" name="methods[#tab#][weight][#weight#][conditions][#group#][#rule#][condition]" title="Condition" placeholder="Condition" data-v-rule-condition>
+<!--
+			<optgroup label="General">
+				<option value="none" data-value-type="none">Always</option>
+			</optgroup>
+			<optgroup label="Cart">
+				<option value="cart.subtotal" data-value-type="number">Sub total (total products price)</option>
+				<option value="cart.total" data-value-type="number">Grand total price (final price)</option>-->
+				<option value="cart.weight" data-value-type="number">Total cart weight</option><!--
+				<option value="cart.max_width" data-value-type="number">Max width</option>
+				<option value="cart.max_height" data-value-type="number">Max height</option>
+				<option value="cart.max_length" data-value-type="number">Max length</option>
+				<option value="cart.max_dimension" data-value-type="number">Max dimension</option>
+			</optgroup>
+			<optgroup label="Checkout">
+				<option value="checkout.country_id" data-value-type="entity"
+						data-autocomplete-url="index.php?module=localization/countries&action=countryAutocomplete">Country</option>
+				<option value="checkout.region_id" data-value-type="number">Region</option>
+				<option value="checkout.post_code" data-value-type="text">Post code</option>
+				<option value="checkout.coupon" data-value-type="coupon">Coupon code</option>
+			</optgroup>
+			<optgroup label="Product">
+				<option value="product.product" data-value-type="entity"
+						data-autocomplete-url="index.php?module=plugins/shipping/settings&action=productsAutocomplete">Product in cart</option>
+				<option value="product.price" data-value-type="number">Price (total products price)</option>
+				<option value="product.weight" data-value-type="number">Weight (total products weight)</option>
+				<option value="product.width" data-value-type="number">Width</option>
+				<option value="product.height" data-value-type="number">Height</option>
+				<option value="product.length" data-value-type="number">Length</option>
+				<option value="product.volume" data-value-type="number">Volume</option>
+				<option value="product.stock_quantity" data-value-type="number">Stock quantity</option>
+				<option value="product.stock_status" data-value-type="number">Stock status</option>
+				<option value="product.product_category" data-value-type="entity"
+						data-autocomplete-url="index.php?module=plugins/shipping/settings&action=categoriesAutocomplete">Product category</option>
+				<option value="product.product_tag" data-value-type="entity"
+						data-autocomplete-url="index.php?module=plugins/shipping/settings&action=categoriesAutocomplete&type=tags">Product tag</option>
+				<option value="product.manufacturer" data-value-type="entity"
+						data-autocomplete-url="index.php?module=plugins/shipping/settings&action=manufacturersAutocomplete">Manufacturer</option>
+				<option value="product.product_field_value" data-value-type="field_value">Field value (name:value)</option>
+				<option value="product.product_field_range" data-value-type="field_range">Field range (name:min-max)</option>
+			</optgroup>
+			<optgroup label="User">
+				<option value="user.user_group_id" data-value-type="number">User group</option>
+			</optgroup>
+			<optgroup label="Time">
+				<option value="time_of_the_day" data-value-type="number">Time of the day (0 - 23)</option>
+				<option value="day_of_the_week" data-value-type="number">Day of the week (1 Mon - 7 Sun)</option>
+			</optgroup>
+			<optgroup label="Shipping">
+				<option value="shipping_cost" data-value-type="number">Shipping cost</option>
+			</optgroup>-->
+		</select>
+
+	</div>
+	<div class="col-sm-3">
+		<select class="form-select" name="methods[#tab#][weight][#weight#][conditions][#group#][#rule#][operator]" title="Operator" placeholder="Operator" data-v-rule-operator>
+		<!--
+		  <option value="==">is equal to</option>
+		  <option value="!=">is not equal to</option>-->
+		  <option value=">">is greater than</option><!--
+		  <option value=">=">is greater or equal to</option>
+		  <option value="<">is smaller than</option>
+		  <option value="<=">is smaller or equal to</option>-->
+		</select>
+	</div>
+	<div class="col-sm-5">
+		<div class="d-flex">
+			<div class="flex-grow-1 rule-value-wrap">
+				<input type="text" class="form-control" name="methods[#tab#][weight][#weight#][conditions][#group#][#rule#][value]" value="" placeholder="Value" required data-v-rule-value>
+			</div>
+		  <button class="btn btn-outline-primary btn-icon text-nowrap mx-2 btn-add">
+			<span>and</span> <svg class="svg-icon" aria-hidden="true"><use href="/admin/default/img/icons.svg#plus"></use></svg>
+		  </button>
+		  <button class="btn btn-outline-danger btn-icon btn-remove">
+			<svg class="svg-icon" aria-hidden="true"><use href="/admin/default/img/icons.svg#circle-minus"></use></svg>
+		  </button>
+		</div>
+	</div>
+ </div>
